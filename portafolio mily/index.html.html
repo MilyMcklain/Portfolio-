@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kawaii Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Fredoka One', cursive;
+      background-color: #fff0f5;
+      color: #4a2f3d;
+      overflow-x: hidden;
+    }
+    header, footer {
+      background-color: #ffb6c1;
+      text-align: center;
+      padding: 15px;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    nav {
+      background: #ffe4ec;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 12px;
+      color: #d63384;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    .notebook-frame {
+      position: relative;
+      background-size: contain;
+      padding: 120px 30px 40px;
+      border: 5px dashed #ffcce5;
+      border-radius: 20px;
+      max-width: 820px;
+      margin: 40px auto;
+      box-shadow: 0 10px 30px rgba(255, 192, 203, 0.4);
+    }
+    .notebook-frame.about {
+      background: url('URL_CUADERNO_MYMELODY.png') no-repeat center top;
+      background-color: #fff0f8;
+    }
+    .notebook-frame.portfolio {
+      background: url('URL_CUADERNO_PINKGRID.png') no-repeat center top;
+      background-color: #ffeafc;
+    }
+    .notebook-frame.contact {
+      background: url('URL_CUADERNO_BLUEHEARTS.png') no-repeat center top;
+      background-color: #e6f7ff;
+    }
+
+    .about-me, .portfolio, .contact {
+      background: rgba(255,255,255,0.9);
+      border-radius: 20px;
+      padding: 30px;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .about-me h2, .portfolio h2, .contact h2 {
+      color: #d63384;
+      background: url('URL_WASHI_TAPE.png') repeat-x;
+      padding: 5px 15px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style-type: '🌸 ';
+      padding-left: 20px;
+      text-align: left;
+      margin: 0;
+    }
+
+    .skill {
+      margin-bottom: 20px;
+    }
+    .skill p {
+      margin: 0 0 5px;
+      font-weight: bold;
+      color: #a64c79;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .bar {
+      background: #ffdce8;
+      border-radius: 30px;
+      height: 20px;
+      overflow: hidden;
+    }
+    .fill {
+      width: 0;
+      background: linear-gradient(90deg, #ff9dbb, #ffb6d9);
+      height: 100%;
+      border-radius: 30px;
+      transition: width 1s ease-in-out;
+    }
+
+    form input, form textarea {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 2px dashed #ffa6c9;
+      border-radius: 12px;
+      font-family: 'Fredoka One', cursive;
+    }
+    button {
+      background-color: #ffb6c1;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover { background-color: #ff82ab; }
+
+    #mensaje-kawaii, #mensaje-kawaii-exito, #mensaje-kawaii-error {
+      font-size: 1.5em;
+      margin-top: 20px;
+      animation: bounce 1s infinite;
+      display: none;
+    }
+    #mensaje-kawaii { color: #ff69b4; }
+    #mensaje-kawaii-exito { color: #4CAF50; animation: none; }
+    #mensaje-kawaii-error { color: #f44336; animation: none; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 1.5em;
+      animation: sparkleAnim 1s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes sparkleAnim {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: translateY(-50px) scale(0.5); }
+    }
+
+    /* Perfil foto centrada */
+    .perfil-img {
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 8px solid #ffcce5;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      margin: 0 auto 30px;
+      display: block;
+    }
+    .about-text {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      color: #5c4b51;
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+    }
+
+    /* Contenedor de cajas centrado y con espacio entre ellas */
+    .info-container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 800px;
+      margin: 0 auto;
+      gap: 20px;
+    }
+
+    .info-box {
+      background: #ffe4ec;
+      border: 2px dashed #ffb6c1;
+      border-radius: 15px;
+      padding: 20px;
+      width: 30%;
+      box-shadow: 0 5px 15px rgba(255, 182, 193, 0.4);
+      text-align: left;
+    }
+
+    .portfolio {
+      text-align: center;
+    }
+
+    .portfolio-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .portfolio-gallery img:first-child {
+      width: 100%;
+      max-width: 780px;
+      border-radius: 12px;
+    }
+
+    .portfolio-gallery img:not(:first-child) {
+      width: 300px;
+      border-radius: 20px;
+    }
+
+    .titulo {
+      font-size: 2rem;
+      color: #ff66b3;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>💖 My Portfolio 💖</header>
+  <nav>
+    <a href="#about">About Me</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <h1 class="titulo">🌸Welcome🌸</h1>
+
+  <div class="notebook-frame about" id="about">
+    <section class="about-me">
+      <img src="bio image.png" alt="Kawaii Profile Picture" class="perfil-img" />
+      <div class="about-text">
+        <h2>💖 About Me 🎀🐻</h2>
+        <p>Hi! I'm <strong>Mily McKlain</strong>, a passionate <strong>graphic designer</strong> whose journey began through the game <strong>IMVU</strong>. What started as a creative escape turned into something bigger—with the support of my amazing friends, <strong>Dome</strong> and <strong>A</strong>, I discovered a love for editing and design.</p>
+        <p>Today, I’m studying <strong>graphic design</strong> because of that experience. If I hadn’t returned to that game, I might never have discovered this creative side of me. I’ve come a long way, and I’m proud of how far I’ve grown—not just as a designer, but as a person.</p>
+        <p>This portfolio is more than just projects—it’s a piece of my heart, my past, and my dreams. 🌈✨<br>Thank you for being here. I hope my work inspires you the same way my journey has inspired me. 🐻💕</p>
+      </div>
+
+      <div class="info-container">
+        <div class="info-box">
+          <h3>✨ Languages</h3>
+          <ul>
+            <li>Spanish</li>
+            <li>English</li>
+            <li>A little Portuguese</li>
+          </ul>
+        </div>
+        <div class="info-box">
+          <h3>🛠 Software</h3>
+          <div class="skill"><p>Photoshop <span>90%</span></p><div class="bar"><div class="fill" style="width: 90%; background-color: #ff99cc;"></div></div></div>
+          <div class="skill"><p>Illustrator <span>85%</span></p><div class="bar"><div class="fill" style="width: 85%; background-color: #ffccff;"></div></div></div>
+          <div class="skill"><p>Ibis Paint <span>100%</span></p><div class="bar"><div class="fill" style="width: 100%; background-color: #ffccff;"></div></div></div>
+          <div class="skill"><p>Canva <span>95%</span></p><div class="bar"><div class="fill" style="width: 95%; background-color: #ffe6e6;"></div></div></div>
+          <div class="skill"><p>Dreamweaver <span>85%</span></p><div class="bar"><div class="fill" style="width: 85%; background-color: #ffd9ec;"></div></div></div>
+        </div>
+        <div class="info-box">
+          <h3>💼 Skills</h3>
+          <ul>
+            <li>Teamwork and leadership</li>
+            <li>Product knowledge</li>
+            <li>Customer service</li>
+            <li>Creative thinking</li>
+            <li>Multitasking</li>
+            <li>Planning</li>
+            <li>Teamwork and collaboration</li>
+            <li>Friendly and outgoing</li>
+            <li>Customer follow-up</li>
+            <li>Fluent in Spanish</li>
+          </ul>
+        </div>
+      </div>
+
+      <button onclick="mostrarMensaje()">✨ Cute Text ✨</button>
+      <button onclick="cambiarFondo()">🎨 Change Background</button>
+      <button onclick="efectoBrillos()">🌟 Stars</button>
+      <p id="mensaje-kawaii">✨Sending you a virtual hug. I hope you can feel it. ✨</p>
+    </section>
+  </div>
+
+  <div class="notebook-frame portfolio" id="portfolio">
+    <section class="portfolio">
+      <h2>Portfolio</h2>
+      <div class="portfolio-gallery">
+        <img src="image 1.jpg" alt="Project 1" />
+        <img src="image 2.jpg" alt="Project 2" />
+        <img src="image 3.jpg" alt="Project 3" />
+        <img src="image 4.png" alt="Project 4" />
+        <img src="image 5.png" alt="Project 5" />
+        <img src="image 6.png" alt="Project 6" />
+        <img src="image 7.jpg" alt="Project 7" />
+      </div>
+    </section>
+  </div>
+
+  <div class="notebook-frame contact" id="contact">
+    <section class="contact">
+      <h2>Contact</h2>
+      <form id="form-contacto">
+        <input type="text" name="user_name" placeholder="Your Name" required>
+        <input type="email" name="user_email" placeholder="Your Email" required>
+        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit">Send 💌</button>
+      </form>
+      <p id="mensaje-kawaii-exito">✨ Message sent successfully! ✨</p>
+      <p id="mensaje-kawaii-error">💔 An error occurred. Please try again later.</p>
+    </section>
+  </div>
+
+  <footer>© 2025 by Mily McKlain | Made with 💗 and creativity</footer>
+
+  <!-- Audio & Scripts -->
+  <audio id="sound-message" src="sounds/click.mp3" preload="auto"></audio>
+  <audio id="sound-color" src="sounds/chime.mp3" preload="auto"></audio>
+  <audio id="sound-sparkle" src="sounds/sparkle.mp3" preload="auto"></audio>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("pOqrblOBlAKk7gyDd");
+    })();
+
+    document.getElementById("form-contacto").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm('service_dcd7qlb', 'template_bt4d5cn', this)
+        .then(function(response) {
+          document.getElementById("mensaje-kawaii-exito").style.display = "block";
+          document.getElementById("mensaje-kawaii-error").style.display = "none";
+        }, function(error) {
+          document.getElementById("mensaje-kawaii-exito").style.display = "none";
+          document.getElementById("mensaje-kawaii-error").style.display = "block";
+        });
+
+      this.reset();
+    });
+
+    function mostrarMensaje() {
+      const mensaje = document.getElementById("mensaje-kawaii");
+      const sonido = document.getElementById("sound-message");
+      mensaje.style.display = 'block';
+      sonido.play();
+      setTimeout(() => mensaje.style.display = 'none', 3000);
+    }
+
+    function cambiarFondo() {
+      const colores = ["#ffe4ec", "#fef6f9", "#e6f7ff", "#fff0f8"];
+      const notebook = document.querySelector(".notebook-frame.about");
+      const sonido = document.getElementById("sound-color");
+      notebook.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)];
+      sonido.play();
+    }
+
+    function efectoBrillos() {
+      const sonido = document.getElementById("sound-sparkle");
+      for (let i = 0; i < 10; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.classList.add("sparkle");
+        sparkle.textContent = "✨";
+        sparkle.style.left = Math.random() * 100 + "%";
+        sparkle.style.top = Math.random() * 100 + "%";
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+      }
+      sonido.play();
+    }
+  </script>
+</body>
+</html>
